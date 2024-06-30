@@ -1,0 +1,135 @@
+*{
+  margin:0px;
+  padding:0px;
+  box-sizing:border-box;
+}
+:root{
+  --light-bg:linear-gradient(to bottom, #7397F1 0%, #A2B3EC 25%, #C4CBF0 57%, #D5D7F2 100%);
+  --dark-bg:linear-gradient(to bottom, #0B0C10 0%, #1B1D22 13%, #2D3034 100%);
+  --light-color:#172145;
+  --dark-color:#66FCF1;
+}
+main{
+  height:100vh;
+  height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family:Arial;
+  color:var(--light-color);
+  background:var(--light-bg);
+  padding:0px 10px;
+  transition:background 0.2s ease;
+  
+  &.dark{
+    background:var(--dark-bg);
+    & .theme-icon svg{
+      & .shape-icon{
+        animation:moveToSun 0.5s ease forwards;
+        fill:var(--dark-color);
+      }
+      &  .cover-circle{
+        transform:translate(15px,0px);
+      }
+      & g > circle{
+       animation:showRays .5s ease forwards;
+       animation-delay:calc(var(--circle-num) * 0.05s);
+      }
+    }
+    & h2{
+      & span{
+        opacity:0;
+      }   
+      &::before{
+        opacity:1;
+      }
+    }
+  }
+  &.light {
+    & .shape-icon{
+      animation:moveToMoon 1s ease forwards;
+    }
+  }
+}
+.theme-icon{
+  width:50px;
+  height:50px;
+  display:flex;
+  cursor:pointer;
+
+  & svg{
+    width:100%;
+    height:100%;
+    transform:rotate(40deg);
+    overflow:visible;
+
+    & mask rect{
+      width:100%;
+      height:100%;
+    }
+    
+    & .shape-icon{
+      transform-origin:center center;
+      transform:rotate(0deg) scale(1);
+      transition:fill .15s ease;
+      fill:var(--light-color);
+    }
+    & .cover-circle{
+      transform:translate(0px,0px);
+      transition:transform 0.5s ease;
+    }
+    & g > circle{
+      transform-origin:center center;
+      transform:scale(0);
+      fill:var(--dark-color);
+    }
+  }
+}
+@keyframes moveToSun{
+  to{
+    transform:rotate(90deg) scale(.55);
+  }
+}
+@keyframes showRays{
+  0%{
+    transform:scale(0);
+  }
+  70%{
+    transform:scale(1.1);
+  }
+  100%{
+    transform:scale(1); 
+  }
+}
+@keyframes moveToMoon{
+  0%{
+    transform:rotate(90deg) scale(.55);   
+  }
+  50%{
+    transform:rotate(-15deg) scale(1);     
+  }
+  85%{
+    transform:rotate(0deg) scale(1);     
+  }
+}
+h2{
+  position:relative;
+  
+  & span{
+    opacity:1;
+    transition:opacity 0.15s ease;
+  }
+  &::before{
+    top:50%;
+    left:50%;
+    width:100%;
+    transform:translate(-50%,-50%);
+    position:absolute;
+    content:'Dark Mode';
+    color:var(--dark-color);
+    opacity:0; 
+    transition:opacity 0.15s ease;
+  }
+}
